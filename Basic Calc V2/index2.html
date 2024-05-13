@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evSXBKJEiFNJhqCsLnT4GxOdbtKjGwbEY2H2wxRztGLaENsKCrMN5ePedQ4mykA" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container mt-3">
+    <h1>Calculator</h1>
+    <div class="calculator d-flex flex-column">
+      <input type="text" id="display" class="form-control form-control-lg" readonly>
+      <div class="row mt-3">
+        <button class="btn btn-light col-3" onclick="appendNumber('7')">7</button>
+        <button class="btn btn-light col-3" onclick="appendNumber('8')">8</button>
+        <button class="btn btn-light col-3" onclick="appendNumber('9')">9</button>
+        <button class="btn btn-warning col-3" onclick="appendOperator('/')">/</button>
+      </div>
+      <div class="row mt-3">
+        <button class="btn btn-light col-3" onclick="appendNumber('4')">4</button>
+        <button class="btn btn-light col-3" onclick="appendNumber('5')">5</button>
+        <button class="btn btn-light col-3" onclick="appendNumber('6')">6</button>
+        <button class="btn btn-warning col-3" onclick="appendOperator('*')">*</button>
+      </div>
+      <div class="row mt-3">
+        <button class="btn btn-light col-3" onclick="appendNumber('1')">1</button>
+        <button class="btn btn-light col-3" onclick="appendNumber('2')">2</button>
+        <button class="btn btn-light col-3" onclick="appendNumber('3')">3</button>
+        <button class="btn btn-warning col-3" onclick="appendOperator('-')">-</button>
+      </div>
+      <div class="row mt-3">
+        <button class="btn btn-light col-3" onclick="appendNumber('0')">0</button>
+        <button class="btn btn-light col-3" onclick="clearDisplay()">C</button>
+        <button class="btn btn-light col-3" onclick="appendNumber('.')">.</button>
+        <button class="btn btn-success col-3" onclick="calculate()">=</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    let currentNumber = "";
+    let previousNumber = "";
+    let operator = "";
+
+    function appendNumber(number) {
+      currentNumber += number;
+      document.getElementById("display").value = currentNumber;
+    }
+
+    function appendOperator(op) {
+      previousNumber = currentNumber;
+      currentNumber = "";
+      operator = op;
+    }
+
+    function clearDisplay() {
+      currentNumber = "";
+      previousNumber = "";
+      operator = "";
+      document.getElementById("display").value = "";
+    }
+
+    function calculate() {
+      let result = 0;
+      switch (operator) {
+        case "+":
+          result = parseFloat(previousNumber) + parseFloat(currentNumber);
+          break;
+        case "-":
+          result = parseFloat(previousNumber) - parseFloat(currentNumber);
+          break;
+        case "*":
+          result = parseFloat(previousNumber) * parseFloat(currentNumber);
+          break;
+        case "/":
+          if (currentNumber !== "0") {
+            result = parseFloat(previousNumber) / parseFloat(currentNumber);
+          } else {
+            alert("Division by zero is not allowed!");
+          }
+          break;
+      }
+      currentNumber = result.toString();
+      previousNumber = "";
+      operator = "";

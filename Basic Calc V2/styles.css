@@ -1,0 +1,8 @@
+.button-grid button {
+    width: 23%; /* slightly less than 1/4 to account for margin */
+    margin: 1%;
+}
+
+.card {
+    background-color: #f8f9fa;
+}
